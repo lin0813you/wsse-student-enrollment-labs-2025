@@ -2,11 +2,20 @@ openapi: 3.0.0
 info:
   title: Student Enrollment API
   version: 1.0.0
+
 servers:
   - url: /api/v1
+
 tags:
   - name: Health
     description: Service health check
+  - name: Students
+    description: Student resources
+
+externalDocs:
+  description: Repository
+  url: https://github.com/lin0813you/wsse-student-enrollment-labs-2025
+
 paths:
   /health:
     get:
@@ -26,3 +35,79 @@ paths:
                     example: ok
                 required: [status]
 
+  /students:
+    get:
+      tags: [Students]
+      summary: List students
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Student'
+                required: [items]
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags: [Students]
+      summary: Create a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: URL of the created student resource
+              schema:
+                type: string
+              example: /api/v1/students/101
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 101
+        name:
+          type: string
+          example: Alice
+      required: [id, name]
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          example: BAD_REQUEST
+        message:
+          type: string
+          example: invalid payload
+      required: [code, message]
