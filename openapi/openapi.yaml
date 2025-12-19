@@ -1,1 +1,28 @@
+openapi: 3.0.0
+info:
+  title: Student Enrollment API
+  version: 1.0.0
+servers:
+  - url: /api/v1
+tags:
+  - name: Health
+    description: Service health check
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                required: [status]
 
