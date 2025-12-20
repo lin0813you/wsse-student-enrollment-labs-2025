@@ -1,0 +1,51 @@
+openapi: 3.0.3
+info:
+  title: Student Enrollment API (Lab-02)
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      summary: Health check (public)
+      security: []   # 覆寫：此端點不需驗證
+      responses:
+        "200":
+          description: OK
+
+  /students:
+    get:
+      summary: List students (needs students.read)
+      responses:
+        "200":
+          description: OK
+    post:
+      summary: Create student (needs students.write)
+      security:
+        - CognitoOAuth2: [students.write]  # 覆寫：寫入需要 write scope
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required: [name]
+      responses:
+        "201":
+          description: Created
+
+components:
+  securitySchemes:
+    CognitoOAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://<domain>.auth.<region>.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://<domain>.auth.<region>.amazoncognito.com/oauth2/token
+          scopes:
+            students.read: Read students
+            students.write: Write students
+
+security:
+  - CognitoOAuth2: [students.read]   # 全域預設：讀取需要 read scope
