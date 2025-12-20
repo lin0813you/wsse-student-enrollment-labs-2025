@@ -1,0 +1,19 @@
+name: openapi-validate
+
+on:
+  pull_request:
+    paths:
+      - "openapi/**"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - run: npm i -g @apidevtools/swagger-cli@4
+      - run: swagger-cli validate openapi/openapi.yaml
