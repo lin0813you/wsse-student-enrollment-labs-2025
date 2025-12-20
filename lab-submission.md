@@ -8,3 +8,4 @@ https://github.com/lin0813you/wsse-student-enrollment-labs-2025/pull/2
 https://github.com/lin0813you/wsse-student-enrollment-labs-2025/blob/e7bf92f2f63504ae3ac3c90be864a9488a12e304/openapi/openapi.yaml#L1-L133
 
 # LAB02
+<img width="2553" height="1272" alt="image" src="https://github.com/user-attachments/assets/872c6ddf-c390-4396-b9f5-7a65d066ed8b" />
